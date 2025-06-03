@@ -1,16 +1,19 @@
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function EmotionSelectScreen() {
   const navigation = useNavigation();
+  const emotions = ['기쁨의 별', '슬픔의 행성', '분노의 화성', '불안의 위성'];
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>감정 여권 - 행성 선택</Text>
-      {['기쁨의 별', '슬픔의 행성', '분노의 화성', '불안의 위성'].map((label, index) => (
+      {emotions.map((label, index) => (
         <TouchableOpacity
           key={index}
           style={styles.btn}
-          onPress={() => navigation.navigate('EmotionRecord')}
+          onPress={() => navigation.navigate('EmotionRecord', { emotion: label })}
         >
           <Text style={styles.btnText}>{label}</Text>
         </TouchableOpacity>

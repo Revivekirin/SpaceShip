@@ -1,26 +1,68 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import ChoiceBar from './ChoiceBar';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { Button } from 'react-native-paper';
+import { DatePickerModal } from 'react-native-paper-dates';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
-export default function EmotionRecordScreen({ navigation }) {
+export default function EmotionRecordScreen() {
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>감정 기록</Text>
-      <Text style={styles.question}>😄 오늘 기분이 좋은 이유는?</Text>
-      <Text style={styles.question}>✅ 무언가 성취한 것이 있나요?</Text>
-      <Text style={styles.question}>📈 오늘 하루를 1~10으로 평가하면?</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>감정 기록 일지</Text>
 
-      <ChoiceBar
-        choices={[
-          { label: '뒤로', onPress: nav => nav.goBack() },
-          { label: '기록 완료', onPress: nav => nav.navigate('EmotionResult') },
-        ]}
+      {/* 날짜 텍스트 */}
+      <Button
+        mode="outlined"
+        textColor="#6a1b9a"
+        style={styles.dateDisplay}
+        onPress={() => setOpen(true)}
+      >
+        <Text style={styles.dateText}>{format(date, 'MMMM dd, yyyy', { locale: ko })}</Text>
+      </Button>
+
+      {/* 날짜 선택 모달 */}
+      <DatePickerModal
+        locale="ko"
+        mode="single"
+        visible={open}
+        onDismiss={() => setOpen(false)}
+        date={date}
+        onConfirm={({ date }) => {
+          setOpen(false);
+          setDate(date);
+        }}
+        saveLabel="선택"
+        label="날짜 선택"
+        animationType="slide"
       />
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, backgroundColor: '#0a0a0a', justifyContent: 'center' },
-  title: { color: 'white', fontSize: 24, marginBottom: 20 },
-  question: { color: 'white', fontSize: 18, marginVertical: 10 },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: 80,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  dateDisplay: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    marginBottom: 20,
+  },
+  dateText: {
+    fontSize: 18,
+    color: '#6a1b9a',
+  },
 });

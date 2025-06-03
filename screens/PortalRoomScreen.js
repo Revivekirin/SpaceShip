@@ -1,8 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ImageBackground, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
+
+const emotionPlanets = [
+  { name: '기쁨 (Joy)', color: '#f7d13d', route: 'JoyPlanet' },
+  { name: '슬픔 (Sadness)', color: '#3d8ff7', route: 'SadPlanet' },
+  { name: '분노 (Anger)', color: '#f73d3d', route: 'AngerPlanet' },
+  { name: '불안 (Anxiety)', color: '#9b59b6', route: 'AnxietyPlanet' },
+];
 
 export default function PortalRoomScreen() {
   const navigation = useNavigation();
@@ -12,21 +19,18 @@ export default function PortalRoomScreen() {
       source={require('../assets/portal_room_bg.png')} // 배경 이미지 필요
       style={styles.container}
     >
-      {/* 감정 행성 포탈 버튼 */}
-      <View style={styles.planetRow}>
-        <TouchableOpacity style={[styles.planet, { backgroundColor: '#f7d13d' }]} onPress={() => navigation.navigate('JoyPlanet')}>
-          <Text style={styles.planetText}>😊 기쁨</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.planet, { backgroundColor: '#3d8ff7' }]} onPress={() => navigation.navigate('SadPlanet')}>
-          <Text style={styles.planetText}>😢 슬픔</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.planet, { backgroundColor: '#f73d3d' }]} onPress={() => navigation.navigate('AngerPlanet')}>
-          <Text style={styles.planetText}>😡 분노</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.planet, { backgroundColor: '#9b59b6' }]} onPress={() => navigation.navigate('AnxietyPlanet')}>
-          <Text style={styles.planetText}>😨 불안</Text>
-        </TouchableOpacity>
-      </View>
+      {/* 감정 행성 포탈 버튼 (세로 나열형) */}
+      <ScrollView contentContainerStyle={styles.planetColumn}>
+        {emotionPlanets.map((planet) => (
+          <TouchableOpacity
+            key={planet.name}
+            style={[styles.planet, { backgroundColor: planet.color }]}
+            onPress={() => navigation.navigate(planet.route)}
+          >
+            <Text style={styles.planetText}>{planet.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
       {/* 좌우 패널 */}
       <TouchableOpacity style={[styles.panel, { left: 20 }]} onPress={() => navigation.navigate('EmotionRecord')}>
@@ -59,15 +63,20 @@ export default function PortalRoomScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  planetRow: { flexDirection: 'row', justifyContent: 'space-around', marginTop: 120 },
+  planetColumn: {
+    marginTop: 80,
+    alignItems: 'center',
+    gap: 16,
+    paddingBottom: 150,
+  },
   planet: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: width * 0.6,
+    height: 60,
+    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  planetText: { color: 'white', fontWeight: 'bold' },
+  planetText: { color: 'white', fontWeight: 'bold', fontSize: 16 },
   panel: {
     position: 'absolute',
     top: height * 0.4,
