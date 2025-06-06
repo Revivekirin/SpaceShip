@@ -9,7 +9,7 @@ export default function JoyPlanetScreen() {
   return (
     <View style={styles.container}>
       <Video
-        source={require('../assets/videos/joy.mp4')} // mp4 파일 위치
+        source={require('../assets/videos/joy.mp4')} 
         rate={1.0}
         volume={1.0}
         isMuted={false}
@@ -24,5 +24,5 @@ export default function JoyPlanetScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' },
-  video: { width: width, height: width * 0.5625 }, // 16:9 비율
+  video: { width: width, height: width * 0.5625 },
 });

@@ -15,6 +15,7 @@ import GameScreen from '../components/GameScreen';
 
 import FriendListScreen from '../components/FriendListScreen'; 
 import JoyPlanetScreen from '../screens/JoyPlanetScreen';
+import EmotionPassportFlowScreen from '../components/EmotionPassportFlowScreen';
 // import SadPlanetScreen from '../screens/SadPlanetScreen';
 // import AngerPlanetScreen from '../screens/AngerPlanetScreen';
 // import AnxietyPlanetScreen from '../screens/AnxietyPlanetScreen';
@@ -33,11 +34,12 @@ export default function AppNavigator() {
       <Stack.Screen name="Inventory" component={InventoryScreen} />
       <Stack.Screen name="Guestbook" component={GuestbookScreen} />
       <Stack.Screen name="FriendChat" component={FriendChatScreen} />
-      <Stack.Screen name="PortalRoom" component={PortalRoomScreen} />
+      {/* <Stack.Screen name="PortalRoom" component={PortalRoomScreen} /> */}
       <Stack.Screen name="Game" component={GameScreen} />
 
       <Stack.Screen name="FriendList" component={FriendListScreen} />
       <Stack.Screen name="JoyPlanet" component={JoyPlanetScreen} />
+      <Stack.Screen name="EmotionPassportFlow" component={EmotionPassportFlowScreen} />
       {/* <Stack.Screen name="SadPlanet" component={SadPlanetScreen} />
       <Stack.Screen name="AngerPlanet" component={AngerPlanetScreen} />
       <Stack.Screen name="AnxietyPlanet" component={AnxietyPlanetScreen} /> */}
